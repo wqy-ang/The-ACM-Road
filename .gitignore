@@ -1,0 +1,52 @@
+# ========== C++ 编译产物 ==========
+# 可执行文件
+*.exe
+*.out
+*.app
+*.elf
+
+# 中间目标文件
+*.o
+*.obj
+*.ko
+*.elf
+
+# 调试/链接文件
+*.pdb
+*.ilk
+*.map
+*.exp
+*.lib
+*.a
+
+# ========== IDE / 编辑器配置 ==========
+# VSCode
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+
+# 其他编辑器
+.idea/
+*.swp
+*.swo
+*~
+
+# ========== 系统临时文件 ==========
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# 通用临时/日志
+*.tmp
+*.temp
+*.log
+*.bak
