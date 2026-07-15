@@ -107,44 +107,40 @@ $dp[i] = 1 + (1-p) \cdot dp[i-1] + p \cdot dp[i-2] \pmod{MOD}$
 
 ## 六、完整可AC代码
 ```cpp
-#include <iostream>
-#include <cstdio>
+#include <bits/stdc++.h>
+#define int long long
 using namespace std;
 
-typedef long long ll;
-const int MOD = 998244353;
-const int MAXN = 2e5 + 10;
+const long long mod = 998244353;
 
-ll dp[MAXN];
-
-// 快速幂：求 x^y mod MOD
-ll qpow(ll x, int y = MOD - 2) {
-    ll res = 1;
+// 快速幂
+int qpow(int x, int y) {
+    int a = 1;
     while (y) {
-        if (y & 1) res = res * x % MOD;
-        x = x * x % MOD;
+        if (y & 1)
+            a = (a * x) % mod;
+        x = (x * x) % mod;
         y >>= 1;
     }
-    return res;
+    return a;
 }
 
-int main() {
-    int n, p;
-    scanf("%d%d", &n, &p);
-    
+signed main() {
+    int n, p, q;
+    cin >> n >> p;
+
     // 将概率 p/100 转换为模意义下的整数
-    ll prob = 1ll * p * qpow(100) % MOD;
-    // 1-p 的模值
-    ll prob_1 = (1 + MOD - prob) % MOD;
-    
-    dp[0] = 0;
-    if (n >= 1) dp[1] = 1; // 1血只需攻击1次
-    
-    for (int i = 2; i <= n; i++) {
-        dp[i] = (1 + prob_1 * dp[i-1] % MOD + prob * dp[i-2] % MOD) % MOD;
+    p = p*qpow(100, mod - 2) % mod;
+    q = (mod + 1 - p) % mod;
+
+    vector<int> dp(n + 2, 0);
+    for (int i = n - 1; i >= 0; i--) {
+        // 状态转移方程
+        dp[i] = (1 + q * dp[i + 1] % mod + p * dp[i + 2] % mod) % mod;
     }
-    
-    printf("%lld\n", dp[n]);
+
+    cout << dp[0] << '\n';
+
     return 0;
 }
 ```
