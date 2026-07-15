@@ -21,9 +21,12 @@
 
 ### 2. 定义
 若整数 $b$ 与模数 $MOD$ 互质，则存在唯一整数 $inv(b)$，满足：
-$$ b \times inv(b) \equiv 1 \pmod{MOD} $$
+
+$b \times inv(b) \equiv 1 \pmod{MOD}$
+
 此时有：
-$$ \frac{a}{b} \equiv a \times inv(b) \pmod{MOD} $$
+
+$\frac{a}{b} \equiv a \times inv(b) \pmod{MOD}$
 
 ### 3. 费马小定理求逆元
 当 $MOD$ 为质数时，由费马小定理可得：
