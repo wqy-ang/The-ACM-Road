@@ -105,3 +105,46 @@ signed main() {
   - n=12：479001600，大概率TLE
 - 组合复杂度：$O(C_n^m)$
 > 只能用于小n暴力枚举，大数据不能用！
+
+
+## ✅ 新增：字典序相关函数笔记
+> 头文件：`<algorithm>`，`bits/stdc++.h`已经包含
+> 作用：按**字典序**生成排列，竞赛高频，比手写DFS全排列短很多
+
+### 1. next_permutation
+```cpp
+bool next_permutation(it_begin, it_end);
+```
+功能：把区间 `[begin,end)` 的序列**变成下一个字典序更大的排列**
+- 返回值：
+  - `true`：成功找到下一个排列，并原地修改数组
+  - `false`：当前已经是字典序最大排列（降序），无法继续，数组会被改成最小排列
+- ⚠️ 关键点：
+  - **想要枚举全部排列，必须先 sort 升序**！否则只会从当前序列往后枚举
+  - 会自动去重：数组有重复元素时，不会生成重复排列（这点比手写DFS省心）
+- 示例代码
+```cpp
+vector<int> v = {1,2,3};
+sort(v.begin(),v.end());
+do{
+    // 处理当前v
+}while(next_permutation(v.begin(),v.end()));
+```
+
+### 2. prev_permutation
+```cpp
+bool prev_permutation(it_begin, it_end);
+```
+功能：把区间 `[begin,end)` 的序列**变成上一个字典序更小的排列**
+- 返回值：
+  - `true`：找到前一个更小排列，原地修改
+  - `false`：当前已经是字典序最小排列（升序），无法继续
+- ⚠️ 关键点：
+  - 如果要枚举全部排列，**初始数组要降序排序**
+```cpp
+vector<int> v = {3,2,1};
+sort(v.rbegin(),v.rend());
+do{
+    //处理v
+}while(prev_permutation(v.begin(),v.end()));
+```
