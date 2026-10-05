@@ -112,7 +112,7 @@ cout << *tr.find_by_order(first_pos); // 输出 5
 | 判空 | `tr.empty()` | 树为空返回 `true` |
 | 清空树 | `tr.clear()` | 移除所有元素 |
 | 首尾迭代器 | `tr.begin()` / `tr.end()` | 支持范围 for 遍历 |
-| 二分查找 | `tr.lower_bound(x)` / `tr.upper_bound(x)` | 用法与 `std::set` 完全一致 |
+| 二分查找 | `tr.lower_bound(x)` / `tr.upper_bound(x)` | 用法与 `std::set` 相反 |
 
 ### 3.2 重点避坑：可重集的单个元素删除
 ⚠️ **高频易错点**：在 `less_equal<T>`（可重集）模式下，直接执行 `tr.erase(x)` 会**删除所有值等于 x 的元素**，而非只删一个。
@@ -167,3 +167,29 @@ tr.erase(tr.upper_bound(5));
 ### 3.6 编译环境说明
 - 仅支持 **GCC / MinGW-w64** 编译器，MSVC（Visual Studio）不支持该 GNU 扩展
 - 若使用 TDM-GCC 出现 `iconv.h` 缺失报错，建议更换为 MSYS2 版 MinGW-w64，或改用分开的两个 pbds 头文件
+
+### 3.7 简易完整代码展示
+```cpp
+#include<bits/stdc++.h>
+#include<bits/extc++.h>
+using namespace std;
+using namespace __gnu_pbds;
+
+template <typename T>
+using ordered_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+int main(){
+    ordered_multiset<int> bbt;
+    bbt.insert(2);
+    bbt.insert(2);
+    bbt.insert(5);
+    cout << bbt.order_of_key(5) << '\n'; // <5 的元素：2个，输出2
+    cout << *bbt.find_by_order(2) << '\n'; // 第2小，输出5
+
+    // 删除一个2
+    auto it = bbt.upper_bound(2);
+    if(it != bbt.end() && *it == 2) bbt.erase(it);
+    cout << bbt.size() << '\n'; // 现在size=2
+    return 0;
+}
+```
